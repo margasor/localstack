@@ -1,0 +1,46 @@
+name: Terraform + LocalStack
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar el repo
+        uses: actions/checkout@v4
+
+      - name: Instalar Terraform
+        uses: hashicorp/setup-terraform@v4
+
+      - name: Arrancar LocalStack
+        uses: LocalStack/setup-localstack@v0.2.5
+        with:
+          image-tag: "latest"
+        env:
+          LOCALSTACK_AUTH_TOKEN: ${{ secrets.LOCALSTACK_AUTH_TOKEN }}
+
+      - name: Esperar a que LocalStack esté listo
+        run: |
+          for i in {1..30}; do
+            if curl -s http://localhost:4566/_localstack/health > /dev/null; then
+              echo "LocalStack listo"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "LocalStack no arrancó" && exit 1
+
+      - name: Terraform init
+        working-directory: terraform
+        run: terraform init
+
+      - name: Terraform plan
+        working-directory: terraform
+        run: terraform plan
+
+      - name: Terraform apply
+        working-directory: terraform
+        run: terraform apply -auto-approve
