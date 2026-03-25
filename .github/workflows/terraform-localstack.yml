@@ -20,7 +20,7 @@ jobs:
         with:
           image-tag: "latest"
         env:
-          LOCALSTACK_AUTH_TOKEN: ${{ secrets.LOCALSTACK_AUTH_TOKEN }}
+          LOCALSTACK_ACKNOWLEDGE_ACCOUNT_REQUIREMENT=1
 
       - name: Esperar a que LocalStack esté listo
         run: |
