@@ -1,0 +1,9 @@
+name: CI (llamando reusable)
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  llamar:
+    uses: margasor/NivelMedio/.github/workflows/reusable.yaml@main
