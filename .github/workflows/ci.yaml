@@ -5,5 +5,13 @@ on:
     branches: [ "main" ]
 
 jobs:
-  llamar:
-    uses: margasor/NivelMedio/.github/workflows/reusable.yaml@main
+  python-ci:
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    uses: margasor/NivelMedio/.github/workflows/reusable-python-ci.yml@main
+    with:
+      python-version: ${{ matrix.python-version }}
+      src-path: "src"
+      tests-path: "tests"
