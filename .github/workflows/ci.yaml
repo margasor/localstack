@@ -14,5 +14,7 @@ jobs:
     uses: margasor/NivelMedio/.github/workflows/reusable.yaml@main
     with:
       python-version: ${{ matrix.python-version }}
+      run-compile: true
+      run-tests: true
       src-path: "src"
       tests-path: "tests"
