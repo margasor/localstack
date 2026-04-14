@@ -10,7 +10,7 @@ jobs:
       matrix:
         python-version: ["3.11", "3.12"]
 
-    uses: margasor/NivelMedio/.github/workflows/reusable-python-ci.yml@main
+    uses: margasor/NivelMedio/.github/workflows/reusable.yaml@main
     with:
       python-version: ${{ matrix.python-version }}
       src-path: "src"
